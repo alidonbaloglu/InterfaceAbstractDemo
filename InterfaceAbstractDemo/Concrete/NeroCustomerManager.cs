@@ -1,4 +1,5 @@
 ﻿using InterfaceAbstractDemo.Abstract;
+using InterfaceAbstractDemo.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,24 @@ using System.Threading.Tasks;
 
 namespace InterfaceAbstractDemo.Concrete
 {
-    internal class NeroCustomerManager:BaseCustomerManager
+    public class NeroCustomerManager:BaseCustomerManager
     {
+        ICustomerCheckService _customerCheckService;
+        public NeroCustomerManager(ICustomerCheckService customerCheckService)
+        {
+            _customerCheckService = customerCheckService;
+        }
+
+        public override void Save(Customer customer)
+        {
+            if (_customerCheckService.CheckIfRealPerson(customer))
+            {
+                base.Save(customer);
+            }
+            else
+            {
+                throw new Exception("Geçerli Kişi Deği!");
+            }
+        }
     }
 }

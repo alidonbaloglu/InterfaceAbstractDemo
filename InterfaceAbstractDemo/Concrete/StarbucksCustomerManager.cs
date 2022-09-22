@@ -8,17 +8,26 @@ using System.Threading.Tasks;
 
 namespace InterfaceAbstractDemo.Concrete
 {
-    public  class StarbucksCustomerManager:BaseCustomerManager,ICustomerCheckService
+    public  class StarbucksCustomerManager:BaseCustomerManager
     {
-        public override void Save(Customer customer)
+        ICustomerCheckService _customerCheckService;
+
+        public StarbucksCustomerManager(ICustomerCheckService customerCheckService)
         {
-            CheckIfRealPerson(customer);
-            base.Save(customer);
+            _customerCheckService = customerCheckService;
         }
 
-        public void CheckIfRealPerson(Customer customer)
+        public override void Save(Customer customer)
         {
-            throw new NotImplementedException();
+            if (_customerCheckService.CheckIfRealPerson(customer))
+            {
+                base.Save(customer);
+            }
+            else
+            {
+                throw new Exception("Geçerli Kişi Deği!");
+            }
+            
         }
 
         

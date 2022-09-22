@@ -11,7 +11,7 @@ namespace InterfaceAbstractDemo.Abstract
     {
         public virtual void Save(Customer customer)
         {
-            Console.WriteLine("Veri Tabanına kayıt edildi: "+customer.FirstName);
+            Console.WriteLine("Veri Tabanına kayıt edildi : "+customer.FirstName);
         }
     }
 }
